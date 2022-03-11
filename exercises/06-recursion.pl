@@ -22,7 +22,7 @@ fibonacci(N, F) :-
     F is Fi1 + Fi2.
 
 % Determines if a number N is prime.
-isPrime(1) :- !.
+isPrime(1) :- !, fail.
 isPrime(2) :- !.
 isPrime(N) :-
     M is N - 1,
