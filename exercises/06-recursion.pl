@@ -6,10 +6,11 @@ factorial(N, F) :-
     F is N * Fi.
 
 % A recursive version of the calculation of the sum of numbers between 0 and N.
-somaRec([], 0) :- !.
-somaRec([N | Ns], S) :-
-    somaRec(Ns, Si),
-    S is N + Si.
+recSum(0, 0) :- !.
+recSum(N, S) :-
+    Nn is N - 1,
+    recSum(Nn, Si),
+    S is Si + N.
 
 % Calculates the Nth fibonacci number.
 fibonacci(0, 0) :- !.
