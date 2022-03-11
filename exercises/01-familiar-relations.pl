@@ -94,14 +94,16 @@ uncle(A, B) :-
     parent(_PB, B),
     siblings(A, _PB).
 
+% Succeeds if A is an ancestor of D.
 ancestor(A, D) :-
     parent(A, D).
 ancestor(A, D) :-
     parent(A, _I),
     ancestor(_I, D).
 
-descendant(A, D) :-
-    ancestor(D, A).
+% Succeeds if D is an descendant of A.
+descendant(D, A) :-
+    ancestor(A, D).
 
 % -----------------------------------------------------------------------------
 % Questions and answers

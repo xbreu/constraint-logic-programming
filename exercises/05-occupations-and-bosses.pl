@@ -21,6 +21,7 @@ headed_by(supervisor, chief_supervisor).
 headed_by(chief_supervisor, director).
 headed_by(exec_secretary, director).
 
+% Indicates that B has an occupation superior to that of O.
 superior(O, B) :-
     headed_by(O, B).
 superior(O, B) :-

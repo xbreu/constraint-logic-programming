@@ -38,6 +38,7 @@ numberOfGates('Istanbul', 9).
 numberOfGates('Budapest', 6).
 numberOfGates('Porto', 5).
 
+% A team wins a race if one of its pilots wins it.
 winnerTeamIn(L, T) :-
     championIn(L, P),
     runsFor(T, P).
