@@ -58,6 +58,55 @@ attendsMoreThanOneCourse(S) :-
     attends(_C2, S),
     _C1 \= _C2.
 
+% Returns a list with all the teachers.
+% teachers(-T)
+teachers(T) :-
+    setof(Teacher, Course^(
+        teaches(Course, Teacher)
+    ), T).
+
+% Returns a list with all the students of teacher T.
+% students_of(+T, -S)
+students_of(T, S) :-
+    setof(Student, Course^(
+        teaches(Course, T),
+        attends(Course, Student)
+    ), S).
+
+% Returns a list with all the teachers of student S.
+% teachers_of(+S, -T)
+teachers_of(S, T) :-
+    setof(Teacher, Course^(
+        attends(Course, S),
+        teaches(Course, Teacher)
+    ), T).
+
+% Returns a list with all the courses attended by both students S1 and S2.
+% common_courses(+S1, +S2, -C)
+common_courses(S1, S2, C) :-
+    setof(Course, (
+        attends(Course, S1),
+        attends(Course, S2)
+    ), C).
+
+% Returns a list with all the students that attend more than one course.
+% more_than_one_course(-L)
+more_than_one_course(L) :-
+    setof(Person, C1^C2^(
+        attends(C1, Person),
+        attends(C2, Person),
+        C1 \= C2
+    ), L).
+
+% Returns a list of all pairs of students that attend no courses together.
+% strangers(-L)
+% TODO
+
+% Returns a list of all pairs of students that attend more than one course
+% together.
+% good_groups(-L)
+% TODO
+
 % -----------------------------------------------------------------------------
 % Questions and answers
 % -----------------------------------------------------------------------------

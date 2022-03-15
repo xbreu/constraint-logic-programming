@@ -105,6 +105,75 @@ ancestor(A, D) :-
 descendant(D, A) :-
     ancestor(A, D).
 
+% Returns a list of all children of Person.
+% children(+Person, -Children)
+children(Person, Children) :-
+    findall(Child, parent(Person, Child), Children).
+
+% Returns a list made out of pairs in the format P-C, where P is a member of
+% ListOfPeople and C is a list with its children.
+% children_of(+ListOfPeople, -ListOfPairs)
+children_of(ListOfPeople, ListOfPairs) :-
+    findall(Person-Children, (
+        member(Person, ListOfPeople),
+        children(Person, Children)
+    ), ListOfPairs).
+
+% Returns a list with all the people from the family.
+% family(-F)
+family(F) :-
+    setof(Person, Other^(
+        parent(Person, Other);
+        parent(Other, Person)
+    ), F).
+
+% Unifies C with a pair of people X-Y that has at least one child in common.
+% couple(?C)
+couple(X-Y) :-
+    bagof(Child, (
+        parent(X, Child),
+        parent(Y, Child)
+    ), _),
+    X \= Y.
+
+% Returns a list with all the couples that have a child in common, with no
+% repeated elements.
+% couples(-List)
+couples(List) :-
+    setof(Couple, (
+        couple(Couple)
+    ), List).
+
+% Returns in SC a pair Spouse-Children with a spouse and the children of Person
+% and Spouse.
+% spouse_children(+Person -SC)
+spouse_children(Person, Spouse-Children) :-
+    bagof(Child, (
+        couple(Person-Spouse),
+        parent(Person, Child),
+        parent(Spouse, Child)
+    ), Children).
+
+% Returns in PC a pair A-B where A is a list of progenitors of the Person and B
+% is a list of its spouses and respective children.
+% immediate_family(+Person, -PC)
+immediate_family(Person, Left-Right) :-
+    bagof(Spouse/Children, (
+        spouse_children(Person, Spouse-Children)
+    ), Right),
+    findall(Progenitor, (
+        parent(Progenitor, Person)
+    ), Left).
+
+% Returns in Parents a list of all the people that had at least two children.
+% parents_of_two(-Parents)
+parents_of_two(Parents) :-
+    setof(Parent, X^Y^(
+        parent(Parent, X),
+        parent(Parent, Y),
+        X \= Y
+    ), Parents).
+
 % -----------------------------------------------------------------------------
 % Questions and answers
 % -----------------------------------------------------------------------------
