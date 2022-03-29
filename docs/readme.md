@@ -1,5 +1,7 @@
 # Constraint Logic Programming
 
+You can see a list of the materials provided in each lecture [here](./lectures.md).
+
 ## Objectives
 
 This course addresses the Logic Programming (LP) and Constraint Programming (CP) paradigms, specifically Constraint Logic Programming (CLP). The LP paradigm presents a declarative approach to programming, based on formal reasoning processes, more appropriate to the resolution of certain types of problems. CLP allows for an efficient approach to constraint satisfaction problems and optimization problems, modeling them in a direct and elegant manner.
